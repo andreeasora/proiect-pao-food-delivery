@@ -1,6 +1,8 @@
 # proiect-pao-food-delivery
 Proiect - Programare Avansata pe Obiecte - Java - Food Delivery :pizza: :hamburger: :clinking_glasses:
 
+  Acest proiect va simula o aplicatie de Food Delivery. In cadrul ei avem persoane care pot fi de 2 feluri: user sau sofer. Userii au o adresa deoarece este necesara aceasta in momentul livrarii, iar soferii au un anumit mijloc de transport folosit (masina/scuter/bicicleta). Persoanele pot fi comparate dupa varsta. Aplicatia va retine diverse restaurante cu un anumit meniu. Meniul cuprinde produse, care la randul lor au un pret si o lista de ingrediente, cat si cantitatea fiecarui ingredient. Comanda se poate plasa pentru un user dat, catre un restaurant dat, aceasta avand o metoda de plata, o valoare si o lista de produse (si cantitatile lor) cuprinse in comanda respectiva.
+
 **Obiecte:**
 - Person
 - User
