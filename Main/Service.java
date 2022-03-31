@@ -30,7 +30,7 @@ public class Service
         System.out.println("\n---Sora Andreea-Ioana/Grupa 234/Grupa 11 Lab PAO/Proiect - Programare avansata pe obiecte/Tema: Food Delivery---");
         System.out.println("Actiunile posibile: ");
         System.out.println("1. Creare User");
-        System.out.println("2. Adaugare mijloc de transport (masina, scurter sau bicicleta)");
+        System.out.println("2. Adaugare mijloc de transport (masina, scuter sau bicicleta)");
         System.out.println("3. Adaugare sofer");
         System.out.println("4. Adaugare ingredient");
         System.out.println("5. Adaugare produs");
