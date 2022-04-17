@@ -6,6 +6,7 @@ import Orders.Product;
 import Orders.Restaurant;
 import Person.Address;
 import Person.Driver;
+import Person.driversLicenseCategory;
 import Person.Person;
 import Person.AgeComparator;
 import Person.User;
@@ -147,10 +148,25 @@ public class Service
         System.out.println("Introduceti varsta soferului: ");
         Integer age = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Introduceti categoria de permis pe care o are: (ex: A1, B2 etc) ");
-        String driversLicenseCategory = scanner.nextLine();
+        System.out.println("Introduceti categoria de permis pe care o are: (A1, A2, B1, B, C1, C) ");
+        String drivers = scanner.nextLine();
+        driversLicenseCategory driverLicense;
+        if (drivers.equalsIgnoreCase("A1"))
+            driverLicense = driversLicenseCategory.A1;
+        else if (drivers.equalsIgnoreCase("A2"))
+            driverLicense = driversLicenseCategory.A2;
+        else if (drivers.equalsIgnoreCase("B1"))
+            driverLicense = driversLicenseCategory.B1;
+        else if (drivers.equalsIgnoreCase("B"))
+            driverLicense = driversLicenseCategory.B;
+        else if (drivers.equalsIgnoreCase("C1"))
+            driverLicense = driversLicenseCategory.C1;
+        else if (drivers.equalsIgnoreCase("C"))
+            driverLicense = driversLicenseCategory.C;
+        else
+            driverLicense = driversLicenseCategory.A1;
         Transport transport = createTransport();
-        Driver dr = new Driver(lastName, firstName, email, phoneNo, age, driversLicenseCategory, transport);
+        Driver dr = new Driver(lastName, firstName, email, phoneNo, age, driverLicense, transport);
         return dr;
     }
 
@@ -178,7 +194,7 @@ public class Service
         scanner.nextLine();
         System.out.println("Doriti sa stabiliti lista de ingrediente pentru acest produs? (da/nu) ");
         String ans = scanner.nextLine();
-        Hashtable<Ingredient, Integer> ingregientList = new Hashtable<Ingredient, Integer>();
+        Hashtable<Ingredient, Integer> ingregientList = new Hashtable<>();
         if (ans.equalsIgnoreCase("da"))
         {
             System.out.println("Cate ingrediente contine produsul? Introduceti numarul lor: ");
@@ -333,10 +349,10 @@ public class Service
     {
         Scanner scanner;
         scanner = new Scanner(System.in);
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         List<Transport> transports= new ArrayList<>();
-        List<Driver> drivers = new ArrayList<Driver>();
-        List<Order> orders = new ArrayList<Order>();
+        List<Driver> drivers = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
         List<Ingredient> ingredients = new ArrayList<>();
         List<Product> products = new ArrayList<>();
         List<Restaurant> restaurants = new ArrayList<>();

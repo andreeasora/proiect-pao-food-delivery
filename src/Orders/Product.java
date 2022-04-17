@@ -7,7 +7,7 @@ public class Product
 {
     private String name;
     private Double price;
-    private Hashtable<Ingredient, Integer> ingredientList = new Hashtable<Ingredient, Integer>();
+    private Hashtable<Ingredient, Integer> ingredientList = new Hashtable<>();
 
     private Product()
     {

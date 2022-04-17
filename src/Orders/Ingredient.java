@@ -8,7 +8,6 @@ public class Ingredient
     public Ingredient()
     {
         this.name = "";
-        this.isVegan = false;
     }
 
     public Ingredient(String name, Boolean isVegan)

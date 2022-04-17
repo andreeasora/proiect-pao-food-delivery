@@ -10,7 +10,7 @@ public class Order
     private Integer idRestaurant;
     private Double value;
     private String paymentMethod;
-    private Hashtable<Product, Integer> productList = new Hashtable<Product, Integer>();
+    private Hashtable<Product, Integer> productList = new Hashtable<>();
 
     public Order()
     {

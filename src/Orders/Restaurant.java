@@ -10,7 +10,7 @@ public class Restaurant
     private Integer idRestaurant;
     private String name;
     private Address address;
-    private List<Product> menu = new ArrayList<Product>();
+    private List<Product> menu = new ArrayList<>();
 
     public Restaurant()
     {

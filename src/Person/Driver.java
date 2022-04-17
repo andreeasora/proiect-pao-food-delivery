@@ -4,17 +4,17 @@ import Transport.Transport;
 
 public class Driver extends Person
 {
-    private String driversLicenseCategory; ///categorie permis: A1, A2, B2 etc
+    private driversLicenseCategory driversLicenseCategory; ///categorie permis: A1, A2, B2 etc
     private Transport tr;
 
     public Driver()
     {
         super();
-        this.driversLicenseCategory = "";
+        this.driversLicenseCategory = driversLicenseCategory.A1;
         this.tr = new Transport();
     }
 
-    public Driver(String lastName, String firstName, String email, String phoneNumber, Integer age, String driversLicenseCategory, Transport tr)
+    public Driver(String lastName, String firstName, String email, String phoneNumber, Integer age, driversLicenseCategory driversLicenseCategory, Transport tr)
     {
         super(lastName, firstName, email, phoneNumber, age);
         this.driversLicenseCategory = driversLicenseCategory;
@@ -28,13 +28,11 @@ public class Driver extends Person
         this.tr = d.tr;
     }
 
-    public String getDriversLicenseCategory()
-    {
+    public driversLicenseCategory getDriversLicenseCategory() {
         return driversLicenseCategory;
     }
 
-    public void setDriversLicenseCategory(String driversLicenseCategory)
-    {
+    public void setDriversLicenseCategory(driversLicenseCategory driversLicenseCategory) {
         this.driversLicenseCategory = driversLicenseCategory;
     }
 
