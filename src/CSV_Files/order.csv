@@ -1,4 +1,4 @@
 Order Id, User Id, Restaurant Id, Valoare, Metoda plata, Produs, Cantitate, Produs, Cantitate, Produs, Cantitate
-1, 1, 1,, Cash, Clatite, 2, Ciorba legume, 1, Pizza casei, 1
-2, 1, 1,,Card, Tort ciocolata, 1, Paste carbonara, 2
-3, 2, 1,, Cash, Ciorba perisoare, 1
+1, 1, 1, , Cash, Clatite, 2, Ciorba legume, 1, Pizza casei, 1
+2, 1, 1, ,Card, Tort ciocolata, 1, Paste carbonara, 2, , , 
+3, 2, 1, , Cash, Ciorba perisoare, 1, , , , , 
