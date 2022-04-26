@@ -12,9 +12,9 @@ public class Scooter extends Transport
         this.licensePlate = "";
     }
 
-    public Scooter(Integer maximumSpeed, Integer maximumNoOfOrdersPerTransport, Boolean hasProtectiveEquipment, String licensePlate)
+    public Scooter(Integer idTransport ,Integer maximumSpeed, Integer maximumNoOfOrdersPerTransport, Boolean hasProtectiveEquipment, String licensePlate)
     {
-        super(maximumSpeed, maximumNoOfOrdersPerTransport);
+        super(idTransport, maximumSpeed, maximumNoOfOrdersPerTransport);
         this.hasProtectiveEquipment = hasProtectiveEquipment;
         this.licensePlate = licensePlate;
     }

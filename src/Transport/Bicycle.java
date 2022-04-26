@@ -12,9 +12,9 @@ public class Bicycle extends Transport
         this.isElectric = false;
     }
 
-    public Bicycle(Integer maximumSpeed, Integer maximumNoOfOrdersPerTransport, Boolean hasProtectiveEquipment, Boolean isElectric)
+    public Bicycle(Integer idTransport, Integer maximumSpeed, Integer maximumNoOfOrdersPerTransport, Boolean hasProtectiveEquipment, Boolean isElectric)
     {
-        super(maximumSpeed, maximumNoOfOrdersPerTransport);
+        super(idTransport, maximumSpeed, maximumNoOfOrdersPerTransport);
         this.hasProtectiveEquipment = hasProtectiveEquipment;
         this.isElectric = isElectric;
     }

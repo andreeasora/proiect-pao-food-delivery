@@ -95,6 +95,9 @@ public class Service
                 optiune = opt.replace("\n", "");
             }
         }
+        System.out.println("Introduceti id-ul mijlocului de transport: ");
+        Integer idTrans = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Introduceti viteza maxima a mijlocului de transport: ");
         Integer speed = scanner.nextInt();
         scanner.nextLine();
@@ -109,7 +112,7 @@ public class Service
             String licensePlate = scanner.nextLine();
             System.out.println("Introduceti tipul de combustibil: (benzina/motorina etc) ");
             String combustible = scanner.nextLine();
-            Transport tr = new Car(speed, orders, brand, licensePlate, combustible);
+            Transport tr = new Car(idTrans, speed, orders, brand, licensePlate, combustible);
             return tr;
         } else if (optiune.equalsIgnoreCase("scuter"))
         {
@@ -118,7 +121,7 @@ public class Service
             scanner.nextLine();
             System.out.println("Introduceti numarul de inmatriculare: ");
             String licensePlate = scanner.nextLine();
-            Transport tr = new Scooter(speed, orders, hasProtectiveEquipment, licensePlate);
+            Transport tr = new Scooter(idTrans, speed, orders, hasProtectiveEquipment, licensePlate);
             return tr;
         } else
         {
@@ -128,7 +131,7 @@ public class Service
             System.out.println("Este electrica? (true/false) ");
             Boolean isElectric = scanner.nextBoolean();
             scanner.nextLine();
-            Transport tr = new Bicycle(speed, orders, hasProtectiveEquipment, isElectric);
+            Transport tr = new Bicycle(idTrans, speed, orders, hasProtectiveEquipment, isElectric);
             return tr;
         }
     }

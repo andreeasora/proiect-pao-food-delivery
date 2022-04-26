@@ -14,9 +14,9 @@ public class Car extends Transport
         this.combustible = "";
     }
 
-    public Car(Integer maximumSpeed, Integer maximumNoOfOrdersPerTransport, String brand, String licensePlate, String combustible)
+    public Car(Integer idTransport, Integer maximumSpeed, Integer maximumNoOfOrdersPerTransport, String brand, String licensePlate, String combustible)
     {
-        super(maximumSpeed, maximumNoOfOrdersPerTransport);
+        super(idTransport, maximumSpeed, maximumNoOfOrdersPerTransport);
         this.brand = brand;
         this.licensePlate = licensePlate;
         this.combustible = combustible;
