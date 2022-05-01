@@ -58,6 +58,7 @@ public class Car extends Transport
                 "brand='" + brand + '\'' +
                 ", licensePlate='" + licensePlate + '\'' +
                 ", combustible='" + combustible + '\'' +
+                ", idTransport=" + idTransport +
                 ", maximumSpeed=" + maximumSpeed +
                 ", maximumNoOfOrdersPerTransport=" + maximumNoOfOrdersPerTransport +
                 '}';

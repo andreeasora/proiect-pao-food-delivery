@@ -1,2 +1,3 @@
 Nume, Pret, Nume Ingredient, Ingredient Vegan, Cantitate, Nume Ingredient, Ingredient Vegan, Cantitate, Nume Ingredient, Ingredient Vegan, Cantitate
-Clatite, 12, Oua, False, 2, Lapte, False, 100, Faina, True, 50
+Clatite, 12.0, Oua, False, 2, Lapte, False, 100, Faina, True, 50
+Snitel, 15.0, faina, true, 100, oua, false, 2, pui, false, 1

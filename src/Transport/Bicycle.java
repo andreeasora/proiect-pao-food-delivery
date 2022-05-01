@@ -51,6 +51,7 @@ public class Bicycle extends Transport
         return "Bicycle{" +
                 "hasProtectiveEquipment=" + hasProtectiveEquipment +
                 ", isElectric=" + isElectric +
+                ", idTransport=" + idTransport +
                 ", maximumSpeed=" + maximumSpeed +
                 ", maximumNoOfOrdersPerTransport=" + maximumNoOfOrdersPerTransport +
                 '}';

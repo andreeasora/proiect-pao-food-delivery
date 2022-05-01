@@ -51,6 +51,7 @@ public class Scooter extends Transport
         return "Scooter{" +
                 "hasProtectiveEquipment=" + hasProtectiveEquipment +
                 ", licensePlate='" + licensePlate + '\'' +
+                ", idTransport=" + idTransport +
                 ", maximumSpeed=" + maximumSpeed +
                 ", maximumNoOfOrdersPerTransport=" + maximumNoOfOrdersPerTransport +
                 '}';

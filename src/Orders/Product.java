@@ -9,7 +9,7 @@ public class Product
     private Double price;
     private Hashtable<Ingredient, Integer> ingredientList = new Hashtable<>();
 
-    private Product()
+    public Product()
     {
         this.name = "";
         this.price = 0.0;
