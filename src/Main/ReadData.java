@@ -31,7 +31,7 @@ public class ReadData
 
     }
 
-    public <T> List<T> readCSV(String path, String className)
+    public <T> List<T> readCsv(String path, String className)
     {
         List<T> list = new ArrayList<>();
         try

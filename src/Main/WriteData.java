@@ -28,7 +28,7 @@ public class WriteData
 
     }
 
-    public <T> void WriteInCSV(Object ob, String path, String className)
+    public <T> void writeInCsv(Object ob, String path, String className)
     {
          try
          {

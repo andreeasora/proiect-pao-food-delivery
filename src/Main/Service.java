@@ -410,12 +410,12 @@ public class Service
         scanner = new Scanner(System.in);
         ReadData rd = ReadData.getInstance();
         List<User> users = new ArrayList<>();
-        List<Transport> transports = rd.readCSV("src/CSV_Files/car.csv", "class Transport.Car");
+        List<Transport> transports = rd.readCsv("src/CSV_Files/car.csv", "class Transport.Car");
         List<Driver> drivers = new ArrayList<>();
-        List<Order> orders = rd.readCSV("src/CSV_Files/order.csv", "class Orders.Order");
+        List<Order> orders = rd.readCsv("src/CSV_Files/order.csv", "class Orders.Order");
         List<Ingredient> ingredients = new ArrayList<>();
-        List<Product> products = rd.readCSV("src/CSV_Files/product.csv", "class Orders.Product");
-        List<Restaurant> restaurants = rd.readCSV("src/CSV_Files/restaurant.csv", "class Orders.Restaurant");
+        List<Product> products = rd.readCsv("src/CSV_Files/product.csv", "class Orders.Product");
+        List<Restaurant> restaurants = rd.readCsv("src/CSV_Files/restaurant.csv", "class Orders.Restaurant");
         List<Address> addresses = new ArrayList<>();
         WriteData wr = WriteData.getInstance();
         int option;
@@ -446,7 +446,7 @@ public class Service
                     System.out.println(t);
                     if (t.getClass().toString().equalsIgnoreCase("class Transport.Car"))
                     {
-                        wr.WriteInCSV(t,"src/CSV_Files/car.csv","class Transport.Car");
+                        wr.writeInCsv(t,"src/CSV_Files/car.csv","class Transport.Car");
                     }
                     audit.writeAction("createTransport");
                     break;
@@ -474,7 +474,7 @@ public class Service
                     {
                         products.add(p);
                     }
-                    wr.WriteInCSV(p,"src/CSV_Files/product.csv","class Orders.Product");
+                    wr.writeInCsv(p,"src/CSV_Files/product.csv","class Orders.Product");
                     audit.writeAction("createProduct");
                     System.out.println(p);
                     break;
@@ -485,7 +485,7 @@ public class Service
                         restaurants.add(r);
                     }
                     System.out.println(r);
-                    wr.WriteInCSV(r,"src/CSV_Files/restaurant.csv","class Orders.Restaurant");
+                    wr.writeInCsv(r,"src/CSV_Files/restaurant.csv","class Orders.Restaurant");
                     audit.writeAction("createRestaurant");
                     break;
                 case 7:
@@ -558,7 +558,7 @@ public class Service
                         {
                             Order o = createOrder(idUser, idRes);
                             orders.add(o);
-                            wr.WriteInCSV(o,"src/CSV_Files/order.csv","class Orders.Order");
+                            wr.writeInCsv(o,"src/CSV_Files/order.csv","class Orders.Order");
                             audit.writeAction("placeOrder");
                             System.out.println(o);
                         }
