@@ -29,11 +29,19 @@ Proiect - Programare Avansata pe Obiecte - Java - Food Delivery :pizza: :hamburg
 - Plaseaza comanda pentru un user dat (id) , catre un restaurant dat (id)
 - Seteaza valoarea unei comenzi (id comanda citit de la tastatura) in functie de preparatele pe care le cuprinde, cat si de cantitatile lor
 - Afisare meniu al unui restaurant al carui nume este dat
-- Afisare ingrediente (inclusiv cantitatile) dintr-un produs al carui nume este dat
 - Afisare soferi care folosesc un mijloc de transport dat (masina, scuter, bicicleta)
 - Afisare restaurante dintr-un oras dat ca parametru
 - Afisare toti userii in ordine crescatoare dupa varsta
 - Modifica pretul unui produs dat
 - Modifica adresa unui user al carui id este dat
 - Afisare cel mai comandat produs
+- Streams - Pentru lista username-urilor tuturor userilor cititi, se fac diferite afisari - cu majuscule, cele ce contin litera e, sortate alfabetic
+- Lambda - Afisati pentru fiecare user: Nume - Prenume - Username
+- Afisare toate informatiile din tabelele din baza de date (order, product, car, restaurant)
+- Modifica numarul de inmatriculare al unei masini al carei id este citit de la tastatura
+- Modifica numele unui restaurant al carui id este citit de la tastatura
+- Stergere din baza de date dupa un anumit id din tabela restaurant
+- Stergere din baza de date dupa un anumit id din tabela car
+- Stergere din baza de date dupa un anumit nume din tabela product
+- Stergere din baza de date dupa un anumit id din tabela order
 - Iesire
