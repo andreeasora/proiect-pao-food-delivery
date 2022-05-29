@@ -7,15 +7,20 @@ import Orders.Restaurant;
 import Person.Address;
 import Person.Driver;
 import Person.driversLicenseCategory;
-import Person.Person;
 import Person.AgeComparator;
 import Person.User;
 import Transport.Transport;
 import Transport.Car;
 import Transport.Scooter;
 import Transport.Bicycle;
+import JDBC.conexiuneJDBC;
+import JDBC.carPreparedStatements;
+import JDBC.orderPreparedStatements;
+import JDBC.restaurantPreparedStatements;
+import JDBC.productPreparedStatements;
 //import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
 import java.util.*;
 
 public class Service
@@ -40,15 +45,21 @@ public class Service
         System.out.println("9. Plaseaza comanda pentru un user dat (id) , catre un restaurant dat (id)");
         System.out.println("10. Seteaza valoarea unei comenzi (id comanda citit de la tastatura) in functie de preparatele pe care le cuprinde, cat si de cantitatile lor");
         System.out.println("11. Afisare meniu al unui restaurant al carui nume este dat");
-        System.out.println("12. Afisare ingrediente (inclusiv cantitatile) dintr-un produs al carui nume este dat");
-        System.out.println("13. Afisare soferi care folosesc un mijloc de transport dat (masina, scuter, bicicleta)");
-        System.out.println("14. Afisare restaurante dintr-un oras dat ca parametru");
-        System.out.println("15. Afisare toti userii in ordine crescatoare dupa varsta");
-        System.out.println("16. Modifica pretul unui produs dat");
-        System.out.println("17. Modifica adresa unui user al carui id este dat");
-        System.out.println("18. Afisare cel mai comandat produs");
-        System.out.println("19. Streams - Pentru lista username-urilor tuturor userilor cititi, se fac diferite afisari - cu majuscule, cele ce contin litera e, sortate alfabetic");
-        System.out.println("20. Lambda - Afisati pentru fiecare user: Nume - Prenume - Username");
+        System.out.println("12. Afisare soferi care folosesc un mijloc de transport dat (masina, scuter, bicicleta)");
+        System.out.println("13. Afisare restaurante dintr-un oras dat ca parametru");
+        System.out.println("14. Afisare toti userii in ordine crescatoare dupa varsta");
+        System.out.println("15. Modifica pretul unui produs dat");
+        System.out.println("16. Modifica adresa unui user al carui id este dat");
+        System.out.println("17. Afisare cel mai comandat produs");
+        System.out.println("18. Streams - Pentru lista username-urilor tuturor userilor cititi, se fac diferite afisari - cu majuscule, cele ce contin litera e, sortate alfabetic");
+        System.out.println("19. Lambda - Afisati pentru fiecare user: Nume - Prenume - Username");
+        System.out.println("20. Afisare toate informatiile din tabelele din baza de date (order, product, car, restaurant)");
+        System.out.println("21. Modifica numarul de inmatriculare al unei masini al carei id este citit de la tastatura");
+        System.out.println("22. Modifica numele unui restaurant al carui id este citit de la tastatura");
+        System.out.println("23. Stergere din baza de date dupa un anumit id din tabela restaurant");
+        System.out.println("24. Stergere din baza de date dupa un anumit id din tabela car");
+        System.out.println("25. Stergere din baza de date dupa un anumit nume din tabela product");
+        System.out.println("26. Stergere din baza de date dupa un anumit id din tabela order");
         System.out.println("0. Iesire");
     }
 
@@ -345,7 +356,7 @@ public class Service
         }
     }
 
-    public void setValue(Order orderForSetValue)
+    public void setValue(Order orderForSetValue, orderPreparedStatements orderJDBC)
     {
         Hashtable<Product, Integer> productList = orderForSetValue.getProductList();
         Iterator<Product> it = productList.keySet().iterator();
@@ -356,6 +367,7 @@ public class Service
             totalPrice += key.getPrice() * productList.get(key);
         }
         orderForSetValue.setValue(totalPrice);
+        orderJDBC.updateOrder(totalPrice, orderForSetValue.getIdOrder());
         System.out.println("Valoarea comenzii cu id-ul citit este: " + totalPrice);
     }
 
@@ -412,12 +424,21 @@ public class Service
         List<User> users = new ArrayList<>();
         List<Transport> transports = rd.readCsv("src/CSV_Files/car.csv", "class Transport.Car");
         List<Driver> drivers = new ArrayList<>();
-        List<Order> orders = rd.readCsv("src/CSV_Files/order.csv", "class Orders.Order");
+     //   List<Order> orders = rd.readCsv("src/CSV_Files/order.csv", "class Orders.Order");
         List<Ingredient> ingredients = new ArrayList<>();
-        List<Product> products = rd.readCsv("src/CSV_Files/product.csv", "class Orders.Product");
-        List<Restaurant> restaurants = rd.readCsv("src/CSV_Files/restaurant.csv", "class Orders.Restaurant");
+       // List<Product> products = rd.readCsv("src/CSV_Files/product.csv", "class Orders.Product");
+       // List<Restaurant> restaurants = rd.readCsv("src/CSV_Files/restaurant.csv", "class Orders.Restaurant");
         List<Address> addresses = new ArrayList<>();
         WriteData wr = WriteData.getInstance();
+        Connection connection = conexiuneJDBC.getDatabaseConnection();
+        carPreparedStatements carJDBC = new carPreparedStatements(connection);
+        orderPreparedStatements orderJDBC = new orderPreparedStatements(connection);
+        restaurantPreparedStatements restaurantJDBC = new restaurantPreparedStatements(connection);
+        productPreparedStatements productJDBC = new productPreparedStatements(connection);
+        List<Product> products = productJDBC.getProducts();
+        List<Order> orders = orderJDBC.getOrders();
+        List<Restaurant> restaurants = restaurantJDBC.getRestaurants();
+        List<Car> cars = carJDBC.getCars();
         int option;
         Audit audit = Audit.getInstance();
         do
@@ -446,7 +467,9 @@ public class Service
                     System.out.println(t);
                     if (t.getClass().toString().equalsIgnoreCase("class Transport.Car"))
                     {
-                        wr.writeInCsv(t,"src/CSV_Files/car.csv","class Transport.Car");
+                       // wr.writeInCsv(t,"src/CSV_Files/car.csv","class Transport.Car");
+                        carJDBC.insertCar((Car)t);
+                        cars = carJDBC.getCars();
                     }
                     audit.writeAction("createTransport");
                     break;
@@ -474,7 +497,9 @@ public class Service
                     {
                         products.add(p);
                     }
-                    wr.writeInCsv(p,"src/CSV_Files/product.csv","class Orders.Product");
+                //    wr.writeInCsv(p,"src/CSV_Files/product.csv","class Orders.Product");
+                    productJDBC.insertProduct(p);
+                    products = productJDBC.getProducts();
                     audit.writeAction("createProduct");
                     System.out.println(p);
                     break;
@@ -485,7 +510,9 @@ public class Service
                         restaurants.add(r);
                     }
                     System.out.println(r);
-                    wr.writeInCsv(r,"src/CSV_Files/restaurant.csv","class Orders.Restaurant");
+                    restaurantJDBC.insertRestaurant(r);
+                    restaurants = restaurantJDBC.getRestaurants();
+                 //   wr.writeInCsv(r,"src/CSV_Files/restaurant.csv","class Orders.Restaurant");
                     audit.writeAction("createRestaurant");
                     break;
                 case 7:
@@ -558,7 +585,9 @@ public class Service
                         {
                             Order o = createOrder(idUser, idRes);
                             orders.add(o);
-                            wr.writeInCsv(o,"src/CSV_Files/order.csv","class Orders.Order");
+                            orderJDBC.insertOrder(o);
+                            orders = orderJDBC.getOrders();
+                          //  wr.writeInCsv(o,"src/CSV_Files/order.csv","class Orders.Order");
                             audit.writeAction("placeOrder");
                             System.out.println(o);
                         }
@@ -578,7 +607,7 @@ public class Service
                         if ((o.getIdOrder()).equals(idOrder))
                         {
                             foundId = true;
-                            setValue(o);
+                            setValue(o, orderJDBC);
                             audit.writeAction("setValueForOrder");
                             break;
                         }
@@ -603,22 +632,6 @@ public class Service
                         System.out.println("Nu exista restaurant cu numele respectiv!");
                     break;
                 case 12:
-                    System.out.println("Introduceti numele produsului pentru care doriti sa vedeti ingredientele: ");
-                    String product = scanner.nextLine();
-                    Boolean foundPr = false;
-                    for (Product pr : products)
-                    {
-                        if (pr.getName().equalsIgnoreCase(product))
-                        {
-                            foundPr = true;
-                            showIngredients(pr);
-                        }
-                    }
-                    if (!foundPr)
-                        System.out.println("Nu exista produs cu numele respectiv!");
-                    audit.writeAction("showIngredients");
-                    break;
-                case 13:
                     System.out.println("Introduceti mijlocul de transport pentru care doriti sa vedeti lista soferilor care il folosesc: (masina/scuter/bicicleta) ");
                     String transport = scanner.nextLine();
                     String trOpt = transport.replace("\n", "");
@@ -657,7 +670,7 @@ public class Service
                     if (!foundDriver)
                         System.out.println("Nu exista niciun sofer care foloseste mijlocul de transport introdus!");
                     break;
-                case 14:
+                case 13:
                     System.out.println("Introduceti numele orasului din care doriti sa vedeti lista de restaurante: ");
                     String city = scanner.nextLine();
                     Boolean foundRestaurant = false;
@@ -674,7 +687,7 @@ public class Service
                     if (!foundRestaurant)
                         System.out.println("Nu exista niciun restaurant in orasul transmis ca parametru!");
                     break;
-                case 15:
+                case 14:
                     AgeComparator comparator = new AgeComparator();
                     users.sort(comparator);
                     for (User user : users)
@@ -683,7 +696,7 @@ public class Service
                     }
                     audit.writeAction("sortUsersByAge");
                     break;
-                case 16:
+                case 15:
                     System.out.println("Introduceti numele produsului pentru care doriti sa modificati pretul: ");
                     String productPrice = scanner.nextLine();
                     Boolean foundProduct = false;
@@ -697,6 +710,8 @@ public class Service
                             scanner.nextLine();
                             pr.setPrice(newPrice);
                             System.out.println(pr);
+                            productJDBC.updateProduct(newPrice, productPrice);
+                            products = productJDBC.getProducts();
                             audit.writeAction("changePriceForGivenProduct");
                             break;
                         }
@@ -704,7 +719,7 @@ public class Service
                     if (!foundProduct)
                         System.out.println("Nu exista produs cu numele respectiv!");
                     break;
-                case 17:
+                case 16:
                     System.out.println("Introduceti id-ul user-ului pentru care doriti schimbarea adresei: ");
                     Integer idUserAddr = scanner.nextInt();
                     scanner.nextLine();
@@ -725,12 +740,12 @@ public class Service
                     if (!foundUser)
                         System.out.println("Nu exista user cu id-ul introdus!");
                     break;
-                case 18:
+                case 17:
                     String result = searchProduct(orders);
                     System.out.println("Cel mai comandat produs este: " + result);
                     audit.writeAction("searchProduct");
                     break;
-                case 19:
+                case 18:
                     List<String> usernameList = new ArrayList<>();
                     for (User us:users)
                     {
@@ -750,13 +765,158 @@ public class Service
                             .forEach(System.out::println);
                     audit.writeAction("streamsUsername");
                     break;
-                case 20:
+                case 19:
                     users.forEach(us -> System.out.println(us.getFirstName() + " " + us.getLastName() + " " + us.getUsername()));
                     audit.writeAction("lambdaUser");
+                    break;
+                case 20:
+                    cars = carJDBC.getCars();
+                    System.out.println("Masinile din tabela car: ");
+                    for (Car c : cars)
+                    {
+                        System.out.println(c);
+                    }
+                    restaurants = restaurantJDBC.getRestaurants();
+                    System.out.println("Restaurantele din tabela restaurant: ");
+                    for (Restaurant rt : restaurants)
+                    {
+                        System.out.println(rt);
+                    }
+                    products = productJDBC.getProducts();
+                    System.out.println("Produsele din tabela product: ");
+                    for (Product prd : products)
+                    {
+                        System.out.println(prd);
+                    }
+                    orders = orderJDBC.getOrders();
+                    System.out.println("Comenzile din tabela order: ");
+                    for (Order ord : orders)
+                    {
+                        System.out.println(ord);
+                    }
+                    audit.writeAction("getFromDB");
+                    break;
+                case 21:
+                    System.out.println("Introduceti id-ul masinii careia vreti sa ii modificati numarul de inmatriculare: ");
+                    Integer idCar = scanner.nextInt();
+                    scanner.nextLine();
+                    boolean foundIdCar = false;
+                    for (Car car: cars)
+                    {
+                        if ((car.getIdTransport()).equals(idCar))
+                        {
+                            foundIdCar = true;
+                            System.out.println("Introduceti noul numar de inmatriculare: ");
+                            String newLicensePlate = scanner.nextLine();
+                            carJDBC.updateCar(newLicensePlate, idCar);
+                            cars = carJDBC.getCars();
+                            audit.writeAction("changeLicensePlate");
+                            break;
+                        }
+                    }
+                    if (!foundIdCar)
+                        System.out.println("Nu exista masina cu id-ul introdus!");
+                    break;
+                case 22:
+                    System.out.println("Introduceti id-ul restaurantului caruia vreti sa ii modificati numele: ");
+                    Integer idResUpdate = scanner.nextInt();
+                    scanner.nextLine();
+                    boolean foundIdResUpdate = false;
+                    for (Restaurant rs : restaurants)
+                    {
+                        if ((rs.getIdRestaurant()).equals(idResUpdate))
+                        {
+                            foundIdResUpdate = true;
+                            System.out.println("Introduceti noul nume al restaurantului: ");
+                            String newName = scanner.nextLine();
+                            restaurantJDBC.updateRestaurant(newName, idResUpdate);
+                            restaurants = restaurantJDBC.getRestaurants();
+                            audit.writeAction("changeRestaurantName");
+                            break;
+                        }
+                    }
+                    if (!foundIdResUpdate)
+                        System.out.println("Nu exista restaurant cu id-ul introdus!");
+                    break;
+                case 23:
+                    System.out.println("Introduceti id-ul restaurantului pe care doriti sa il stergeti din baza de date: ");
+                    Integer idResDelete = scanner.nextInt();
+                    scanner.nextLine();
+                    boolean foundIdRes = false;
+                    for (Restaurant res: restaurants)
+                    {
+                        if ((res.getIdRestaurant()).equals(idResDelete))
+                        {
+                            foundIdRes = true;
+                            restaurantJDBC.deleteRestaurant(idResDelete);
+                            restaurants = restaurantJDBC.getRestaurants();
+                            audit.writeAction("deleteRestaurantFromDB");
+                            break;
+                        }
+                    }
+                    if (!foundIdRes)
+                        System.out.println("Nu exista restaurant cu id-ul introdus!");
+                    break;
+                case 24:
+                    System.out.println("Introduceti id-ul masinii pe care doriti sa o stergeti din baza de date: ");
+                    Integer idCarDelete = scanner.nextInt();
+                    scanner.nextLine();
+                    boolean foundIdCarDelete = false;
+                    for (Car car: cars)
+                    {
+                        if ((car.getIdTransport()).equals(idCarDelete))
+                        {
+                            foundIdCarDelete = true;
+                            carJDBC.deleteCar(idCarDelete);
+                            cars = carJDBC.getCars();
+                            audit.writeAction("deleteCarFromDB");
+                            break;
+                        }
+                    }
+                    if (!foundIdCarDelete)
+                        System.out.println("Nu exista masina cu id-ul introdus!");
+                    break;
+                case 25:
+                    System.out.println("Introduceti numele produsului pe care doriti sa il stergeti din baza de date: ");
+                    String namePr = scanner.nextLine();
+                    boolean foundNameProductDelete = false;
+                    for (Product pr: products)
+                    {
+                        if ((pr.getName()).equals(namePr))
+                        {
+                            foundNameProductDelete = true;
+                            productJDBC.deleteProduct(namePr);
+                            products = productJDBC.getProducts();
+                            audit.writeAction("deleteProductFromDB");
+                            break;
+                        }
+                    }
+                    if (!foundNameProductDelete)
+                        System.out.println("Nu exista produs cu numele introdus!");
+                    break;
+                case 26:
+                    System.out.println("Introduceti id-ul comenzii pe care doriti sa o stergeti din baza de date: ");
+                    Integer idOrderDelete = scanner.nextInt();
+                    scanner.nextLine();
+                    boolean foundIdOrderDelete = false;
+                    for (Order or: orders)
+                    {
+                        if ((or.getIdOrder()).equals(idOrderDelete))
+                        {
+                            foundIdOrderDelete = true;
+                            orderJDBC.deleteOrder(idOrderDelete);
+                            orders = orderJDBC.getOrders();
+                            audit.writeAction("deleteOrderFromDB");
+                            break;
+                        }
+                    }
+                    if (!foundIdOrderDelete)
+                        System.out.println("Nu exista comanda cu id-ul introdus!");
                     break;
                 case 0:
                     System.out.println("O zi buna! :)");
                     audit.writeAction("exit");
+                    conexiuneJDBC.closeDatabaseConfiguration();
                     System.exit(0);
                     break;
                 default:
